@@ -29,7 +29,6 @@ async function generateMockData(count) {
     const categoryCount = faker.datatype.number({ min: 1, max: 3 });
     const productCategories = faker.helpers.arrayElements(categories, categoryCount);
 
-    // Determine product type based on categories
     const isElectronics = productCategories.some(cat => 
       ['Electronics', 'Computers', 'Smartphones', 'TV', 'Cameras'].includes(cat));
     const isClothing = productCategories.some(cat => 
@@ -39,7 +38,6 @@ async function generateMockData(count) {
     const isSports = productCategories.some(cat => 
       ['Sports', 'Outdoors', 'Fitness', 'Cycling', 'Team Sports'].includes(cat));
 
-    // Generate appropriate attributes
     const attributes = {};
     
     if (isElectronics) {
