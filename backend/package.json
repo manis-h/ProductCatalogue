@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "E-commerce backend with Express and Mongoose",
   "main": "server.js",
+  "author": {
+    "name": "Manish ",
+    "email": "manishabc83@gmail.com"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
@@ -17,6 +21,7 @@
     "mongoose": "^8.0.3",
     "morgan": "^1.10.1",
     "mysql2": "^3.14.3",
+    "pg": "^8.16.3",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {

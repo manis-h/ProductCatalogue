@@ -1,24 +1,20 @@
 function buildFilterQuery(options) {
   const query = {};
 
-  // Text search
   if (options.search) {
     query.$text = { $search: options.search };
   }
 
-  // Categories filter
   if (options.categories) {
     const categoryList = options.categories.split(',');
     query.categories = { $in: categoryList };
   }
 
-  // Brands filter
   if (options.brands) {
     const brandList = options.brands.split(',');
     query.brand = { $in: brandList };
   }
 
-  // Price range - FIXED VERSION
   if (options.minPrice !== undefined || options.maxPrice !== undefined) {
     query.price = {};
     
@@ -30,13 +26,11 @@ function buildFilterQuery(options) {
       query.price.$lte = parseFloat(options.maxPrice);
     }
     
-    // If we ended up with an empty price object, remove it
     if (Object.keys(query.price).length === 0) {
       delete query.price;
     }
   }
 
-  // Dynamic attributes
   if (options.attributes) {
     try {
       const attributes = JSON.parse(options.attributes);
@@ -74,7 +68,7 @@ function buildSortQuery(sortValue) {
     case 'relevance':
     default:
      
-        sort.createdAt = -1; // Default fallback
+        sort.createdAt = -1; // Default 
      
   }
   
