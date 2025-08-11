@@ -7,17 +7,15 @@ const express = require('express');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/productdb";
-
 mongoose
-  .connect(MONGO_URI, { dbName: "productdb" })
-  .then(() => console.log("Mongo connected"))
-  .catch((err) => {
-    console.error("Mongo connection error:", err);
-    process.exit(1);
-  });
+.connect(MONGO_URI, { dbName: "productdb" })
+.then(() => console.log("Mongo connected"))
+.catch((err) => {
+  console.error("Mongo connection error:", err);
+  process.exit(1);
+});
 
 const { Sequelize } = require('sequelize');
-const { con } = require("./sql");
 require('dotenv').config();
 
 const sequelize = new Sequelize(
@@ -38,30 +36,33 @@ const sequelize = new Sequelize(
     dialectOptions: {
       // For SSL configuration if needed
       // ssl: {
-      //   require: true,
-      //   rejectUnauthorized: false
-      // }
+        //   require: true,
+        //   rejectUnauthorized: false
+        // }
+      }
+    }
+  );
+  
+  // Test the connection
+  async function testConnection() {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
     }
   }
-);
-
-// Test the connection
-async function testConnection() {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-}
-
-testConnection();
-
-module.exports = sequelize;
-const app = express();
-
-// Middleware
-app.use(cors());
+  
+  testConnection();
+  
+  module.exports = sequelize;
+  const app = express();
+  
+  app.use(cors({
+    origin: '*', // Allow all origins for development
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  }));
+  // Middleware
 app.use(express.json());
 
 // Routes
@@ -75,7 +76,6 @@ app.use((err, req, res, next) => {
     message: 'Something broke!' 
   });
 });
-con()
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
