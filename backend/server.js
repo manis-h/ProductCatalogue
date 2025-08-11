@@ -8,6 +8,16 @@ const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/productdb";
 console.log({MONGO_URI})
+
+require('dotenv').config();
+
+
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the SpecsCart API');
+});
 mongoose
 .connect(MONGO_URI, { dbName: "productdb" })
 .then(() => console.log("Mongo connected"))
@@ -15,22 +25,12 @@ mongoose
   console.error("Mongo connection error:", err);
   process.exit(1);
 });
-
-require('dotenv').config();
-
-
-  
-  const app = express();
-  
   app.use(cors({
     origin: '*', // Allow all origins for development
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   }));
   // Middleware
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.send('Welcome to the SpecsCart API');
-});
 // Routes
 app.use('/api/products', productRoutes);
 
