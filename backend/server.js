@@ -15,24 +15,10 @@ mongoose
   process.exit(1);
 });
 
-const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 
   
-  // Test the connection
-  async function testConnection() {
-    try {
-      await sequelize.authenticate();
-      console.log('Connection has been established successfully.');
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-  }
-  
-  testConnection();
-  
-  module.exports = sequelize;
   const app = express();
   
   app.use(cors({
