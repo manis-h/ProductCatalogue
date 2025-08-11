@@ -7,6 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const productRoutes = require('./routes/productRoutes');
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/productdb";
+console.log({MONGO_URI})
 mongoose
 .connect(MONGO_URI, { dbName: "productdb" })
 .then(() => console.log("Mongo connected"))
@@ -48,8 +49,8 @@ app.use((err, req, res, next) => {
     message: 'Something broke!' 
   });
 });
-// const PORT = process.env.PORT || 4000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 module.exports = app;
